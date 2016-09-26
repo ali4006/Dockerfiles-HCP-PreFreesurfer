@@ -22,7 +22,7 @@ fi
 version=${1:-5.0.6}
 os=${2:-CentOS7}
 user=$USER
-installDir=${3:-/home/"$user"/fsl/}
+installDir=${3:-/home/"$user"/fsl}
 downloadDir=${4:-/home/"$user"/downloads/}
 
 function myFslInstaller {
@@ -51,7 +51,7 @@ valid=$(validURL "$url")
 echo "Valid: $valid"
 if [[ "$valid" == true ]]; then
  mkdir -p "$downloadDir"
- #download "$url" "$fslDownloadDir"
+ download "$url" "$fslDownloadDir"
 else
  echo "File doesn't exist in server"
  exit 1
@@ -167,7 +167,7 @@ mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 # set the environment (check in the installer)
 # Set environment variables (run export not needed)
 export FSLDIR="$installDir"
-export PATH=$PATH:${FSLDIR}/bi#. ${FSLDIR}/etc/fslconf/fsl.sh
+export PATH=$PATH:${FSLDIR}/bi#. ${FSLDIR}etc/fslconf/fsl.sh
 
 #Function call
 myFslInstaller

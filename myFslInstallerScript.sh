@@ -13,8 +13,7 @@ set -o nounset
 # * install dir
 # * download dir
 
-#myfslinstaller function takes the parameters and downloads the corresponding file of fsl installer from the server 
-#with the help of os and version parameters
+#myfslinstaller function takes the parameters and downloads the corresponding file of fsl installer from the server with the help of os and version parameters
 if [[ $# -eq 0 ]] ; then
     echo 'No parameters are passed, taking default values'
 fi
@@ -27,11 +26,11 @@ downloadDir=${4:-/home/"$user"/downloads/}
 
 function myFslInstaller {
 echo "###----FSL INSTALLER---###"
-echo "$version"
-echo "$os"
-echo "$user"
-echo "$installDir"
-echo "$downloadDir"
+echo "Version of FSL:$version"
+echo "OS:$os"
+echo "Username:$user"
+echo "Installation Directory:$installDir"
+echo "Download Directory: $downloadDir"
 
 if [[ ! ("$version" =~ ^[0-9].+$) ]]; then 
     echo 'Please pass a number that corresponds to an existing version of FSL'
@@ -40,25 +39,26 @@ fi
 
 url=$(getDownloadURL "$version" "$os")
 
-echo "filename"
 downloadFileName=$(echo "$url"|sed 's#.*/##')
-echo "$downloadFileName"
+#echo "$downloadFileName"
 
 fslDownloadDir=$downloadDir"$downloadFileName"
-echo "$fslDownloadDir"
+#echo "$fslDownloadDir"
 
 valid=$(validURL "$url")
-echo "Valid: $valid"
+#echo "Valid: $valid"
 if [[ "$valid" == true ]]; then
  mkdir -p "$downloadDir"
- download "$url" "$fslDownloadDir"
+    if [ ! -f "$fslDownloadDir" ]; then
+    	download "$url" "$fslDownloadDir"
+    fi
 else
  echo "File doesn't exist in server"
  exit 1
 fi
 
 md5Url=$(getMD5Url "$version" "$os")
-echo "$md5Url"
+#echo "$md5Url"
 
 md5DownloadDir=$downloadDir"$version"".txt"
 
@@ -136,20 +136,21 @@ if [[ `wget -S --spider $1  2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then echo "true";
 function download {
 downloadUrl="$1"
 fileName="$2"
-echo "Downloading.."
+#echo "Downloading.."
 wget $downloadUrl -O $fileName
 }
 
 #validateMD5 function is used for vaidating the md5 checksum value of the downloaded file with the value obtained from the server.
 function validateMD5 {
+echo "Validating MD5 values ..."
 md5FileName="$1"
 fslFileName="$2"
 value=$(awk '{print $1}' "$md5FileName")
 #value=$(<"$md5FileName")
-echo "MD5"
-echo "$value"
+#echo "MD5"
+#echo "$value"
 localmd5=$(md5sum < "$fslFileName" | awk '{print $1}')
-echo "$localmd5"
+#echo "$localmd5"
 rm "$md5FileName"
 if [[ "$value" == "$localmd5" ]];then
 	untar "$fslFileName"
@@ -161,6 +162,7 @@ fi
 
 # unpack in install dir and install
 function untar {
+echo "Unpacking installation files ..."
 fslFileName="$1"
 mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 }
@@ -168,9 +170,13 @@ mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 # set the environment (check in the installer)
 # Set environment variables (run export not needed)
 function installFSL { 
-export FSLDIR="$installDir"
-export PATH=$PATH:${FSLDIR}/bin
+#echo "install"
+echo "Staring installation ..."
+FSLDIR="$installDir"
 . ${FSLDIR}/fsl/etc/fslconf/fsl.sh
+PATH=${FSLDIR}/bin:${PATH}
+export FSLDIR PATH
+echo "Installation completed successfully !!"
 }
 #Function call
 myFslInstaller

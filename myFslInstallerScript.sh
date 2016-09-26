@@ -66,6 +66,7 @@ download "$md5Url" "$md5DownloadDir"
 
 validateMD5 "$md5DownloadDir" "$fslDownloadDir"
 
+installFSL
 }
 
 function getMD5Url {
@@ -166,8 +167,10 @@ mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 
 # set the environment (check in the installer)
 # Set environment variables (run export not needed)
+function installFSL { 
 export FSLDIR="$installDir"
-export PATH=$PATH:${FSLDIR}/bi#. ${FSLDIR}etc/fslconf/fsl.sh
-
+export PATH=$PATH:${FSLDIR}/bin
+. ${FSLDIR}/fsl/etc/fslconf/fsl.sh
+}
 #Function call
 myFslInstaller

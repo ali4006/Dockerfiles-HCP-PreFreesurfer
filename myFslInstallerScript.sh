@@ -21,8 +21,8 @@ fi
 version=${1:-5.0.6}
 os=${2:-CentOS7}
 user=$USER
-installDir=${3:-/home/"$user"/fsl}
-downloadDir=${4:-/home/"$user"/downloads/}
+installDir=${3:-$HOME/fsl}
+downloadDir=${4:-$HOME/downloads/}
 
 function myFslInstaller {
 echo "###----FSL INSTALLER---###"
@@ -170,11 +170,12 @@ mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 # set the environment (check in the installer)
 # Set environment variables (run export not needed)
 function installFSL { 
-#echo "install"
 echo "Staring installation ..."
-FSLDIR="$installDir"
-. ${FSLDIR}/fsl/etc/fslconf/fsl.sh
+FSLDIR=$HOME/fsl/fsl
+echo $FSLDIR
+. ${FSLDIR}/etc/fslconf/fsl.sh
 PATH=${FSLDIR}/bin:${PATH}
+echo $PATH
 export FSLDIR PATH
 echo "Installation completed successfully !!"
 }

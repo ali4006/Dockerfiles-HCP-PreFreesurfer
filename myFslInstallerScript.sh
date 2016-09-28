@@ -13,7 +13,7 @@ set -o nounset
 # * install dir
 # * download dir
 
-#myfslinstaller function takes the parameters and downloads the corresponding file of fsl installer from the server with the help of os and version parameters
+#myfslinstaller function takes the parameters (OS and Version) and downloads the corresponding file of fsl installer from the server.
 if [[ $# -eq 0 ]] ; then
     echo 'No parameters are passed, taking default values'
 fi
@@ -167,16 +167,15 @@ fslFileName="$1"
 mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 }
 
-# set the environment (check in the installer)
-# Set environment variables (run export not needed)
+# Install Function is not used since docker file is taking care of the configuration setup.
 function installFSL { 
 echo "Staring installation ..."
-FSLDIR=$HOME/fsl/fsl
-echo $FSLDIR
-. ${FSLDIR}/etc/fslconf/fsl.sh
-PATH=${FSLDIR}/bin:${PATH}
-echo $PATH
-export FSLDIR PATH
+#FSLDIR="$installDir"/fsl
+#echo "FSLDIR="$installDir"/fsl" >>~/.bash_profile
+#FSLDIR="$installDir"/fsl
+#echo ". ${FSLDIR}/etc/fslconf/fsl.sh" >>~/.bash_profile
+#echo "PATH=${FSLDIR}/bin:${PATH}"   >>~/.bash_profile
+#echo "export FSLDIR PATH" >>~/.bash_profile
 echo "Installation completed successfully !!"
 }
 #Function call

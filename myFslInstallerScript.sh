@@ -20,15 +20,15 @@ fi
 
 version=${1:-5.0.6}
 os=${2:-CentOS7}
-user=$USER
-installDir=${3:-$HOME/fsl}
-downloadDir=${4:-$HOME/downloads/}
+#user=$USER
+installDir=${3:-/usr/local/src}
+downloadDir=${4:-/usr/local/etc/}
 
 function myFslInstaller {
 echo "###----FSL INSTALLER---###"
 echo "Version of FSL:$version"
 echo "OS:$os"
-echo "Username:$user"
+#echo "Username:$user"
 echo "Installation Directory:$installDir"
 echo "Download Directory: $downloadDir"
 
@@ -40,13 +40,13 @@ fi
 url=$(getDownloadURL "$version" "$os")
 
 downloadFileName=$(echo "$url"|sed 's#.*/##')
-#echo "$downloadFileName"
+echo "$downloadFileName"
 
 fslDownloadDir=$downloadDir"$downloadFileName"
-#echo "$fslDownloadDir"
+echo "$fslDownloadDir"
 
 valid=$(validURL "$url")
-#echo "Valid: $valid"
+echo "Valid: $valid"
 if [[ "$valid" == true ]]; then
  mkdir -p "$downloadDir"
     if [ ! -f "$fslDownloadDir" ]; then
@@ -58,7 +58,7 @@ else
 fi
 
 md5Url=$(getMD5Url "$version" "$os")
-#echo "$md5Url"
+echo "$md5Url"
 
 md5DownloadDir=$downloadDir"$version"".txt"
 
@@ -129,7 +129,7 @@ fi
 #Parameter:Download URL
 #Function validURL will return true or false according to the status of the url
 function validURL {
-if [[ `wget -S --spider $1  2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then echo "true"; fi
+if [[ `wget -S --spider $1  2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then echo "true";fi
 }
 
 # Download function downloads the file in corresponding directory which we pass as the second parameter.
@@ -169,14 +169,14 @@ mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 
 # Install Function is not used since docker file is taking care of the configuration setup.
 function installFSL { 
-echo "Staring installation ..."
+#echo "Staring installation ..."
 #FSLDIR="$installDir"/fsl
 #echo "FSLDIR="$installDir"/fsl" >>~/.bash_profile
 #FSLDIR="$installDir"/fsl
 #echo ". ${FSLDIR}/etc/fslconf/fsl.sh" >>~/.bash_profile
 #echo "PATH=${FSLDIR}/bin:${PATH}"   >>~/.bash_profile
 #echo "export FSLDIR PATH" >>~/.bash_profile
-echo "Installation completed successfully !!"
+#echo "Installation completed successfully !!"
 }
 #Function call
 myFslInstaller

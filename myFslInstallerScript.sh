@@ -13,7 +13,7 @@ else
 fi
 
 version=${1:-5.0.6}
-os=${2:-CentOS7}
+os=${2:-CentOS6}
 installDir=${3:-/usr/local/src}
 downloadDir=${4:-/usr/local/etc/}
 
@@ -27,10 +27,6 @@ echo "Download Directory:$downloadDir"
 if [[ ! ("$version" =~ ^[0-9].+$) ]]; then 
   echo 'This does not look like a valid version number'
   exit 1
-fi
-
-if [[ "${os,,}" == "centos7" ]]; then
-  echo "Warning: FSL for CentOS 7 is not available yet. Proceeding to install FSL for CentOS6 version-"$version""
 fi
 
 url=$(getDownloadURL "$version" "$os")
@@ -71,11 +67,7 @@ version="$1"
 os="$2"
 os="${os,,}"
 main_url='http://fsl.fmrib.ox.ac.uk/fsldownloads/md5sums/'
-if [[ "$os" == "centos7" ]]; then
-  echo "$main_url""fsl-""$version""-""centos6_64.tar.gz.md5"
-else
-  echo "$main_url""fsl-""$version-""$os""_64.tar.gz.md5"
-fi
+echo "$main_url""fsl-""$version-""$os""_64.tar.gz.md5"
 }
 
 #Parameters: Version and OS
@@ -86,11 +78,7 @@ os="$2"
 os="${os,,}"
 #echo "$os"
 main_url='http://fsl.fmrib.ox.ac.uk/fsldownloads/oldversions/'
-if [[ "$os" == "centos7" ]]; then
-  echo "$main_url""fsl-""$version""-centos6_64.tar.gz"
-else
-  echo "$main_url""fsl-""$version""-""$os""_64.tar.gz"
-fi
+echo "$main_url""fsl-""$version""-""$os""_64.tar.gz"
 }
 
 #Parameter:Download URL

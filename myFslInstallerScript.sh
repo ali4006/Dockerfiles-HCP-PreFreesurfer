@@ -3,11 +3,13 @@
 
 set -e
 set -u
-set -o nounset
 
 #myfslinstaller function takes the parameters (OS and Version) and downloads the corresponding file of fsl installer from the server.
-if [[ $# -eq 0 ]] ; then
-    echo 'No parameters are passed, taking default values'
+if [[ $# -ne 0 && $# -ne 4 ]] ; then
+  echo -e "Please pass four valid parameters:(Version,OS,Installation Directory,Download Directory)\nUsage: myFslInstallerScript.sh 5.0.6 CentOS6 /usr/local/etc /usr/local/download/"
+  exit 1
+else 
+  echo "No parameters are passed. Taking default values."
 fi
 
 version=${1:-5.0.6}
@@ -20,11 +22,15 @@ echo "###----FSL INSTALLER---###"
 echo "Version of FSL:$version"
 echo "OS:$os"
 echo "Installation Directory:$installDir"
-echo "Download Directory: $downloadDir"
+echo "Download Directory:$downloadDir"
 
 if [[ ! ("$version" =~ ^[0-9].+$) ]]; then 
-    echo 'This does not look like a valid version number'
-    exit 1
+  echo 'This does not look like a valid version number'
+  exit 1
+fi
+
+if [[ "${os,,}" == "centos7" ]]; then
+  echo "Warning: FSL for CentOS 7 is not available yet. Proceeding to install FSL for CentOS6 version-"$version""
 fi
 
 url=$(getDownloadURL "$version" "$os")
@@ -37,14 +43,14 @@ echo "$fslDownloadAbsoluteFileName"
 
 valid=$(validURL "$url")
 echo "Valid: $valid"
-if [[ "$valid" == true ]]; then
-   mkdir -p "$downloadDir"
-     if [ ! -f "$fslDownloadAbsoluteFileName" ]; then
-    	download "$url" "$fslDownloadAbsoluteFileName"
-     fi
-else
+if [[ "$valid" != "true" ]]; then
  echo "File doesn't exist in server"
  exit 1
+fi
+
+mkdir -p "$downloadDir"
+if [ ! -f "$fslDownloadAbsoluteFileName" ]; then
+ download "$url" "$fslDownloadAbsoluteFileName"
 fi
 
 md5Url=$(getMD5Url "$version" "$os")
@@ -52,15 +58,11 @@ echo "$md5Url"
 
 md5DownloadAbsoluteFileName=$downloadDir"$version"".txt"
 
-download "$md5Url" "$md5DownloadAbsoluteFileName"
+ download "$md5Url" "$md5DownloadAbsoluteFileName"
 
-isMD5Equal=$(validateMD5 "$md5DownloadAbsoluteFileName" "$fslDownloadAbsoluteFileName")
+ validateMD5 "$md5DownloadAbsoluteFileName" "$fslDownloadAbsoluteFileName"
 
-if [[ "$isMD5Equal" ]];then
-	untar "$fslDownloadAbsoluteFileName"
-else
-	echo "MD5 checksum does not match"
-fi
+ untar "$fslDownloadAbsoluteFileName"
 
 }
 
@@ -70,9 +72,9 @@ os="$2"
 os="${os,,}"
 main_url='http://fsl.fmrib.ox.ac.uk/fsldownloads/md5sums/'
 if [[ "$os" == "centos7" ]]; then
-	echo "$main_url""fsl-""$version""-""centos6_64.tar.gz.md5"
+  echo "$main_url""fsl-""$version""-""centos6_64.tar.gz.md5"
 else
-	echo "$main_url""fsl-""$version-""$os""_64.tar.gz.md5"
+  echo "$main_url""fsl-""$version-""$os""_64.tar.gz.md5"
 fi
 }
 
@@ -85,16 +87,18 @@ os="${os,,}"
 #echo "$os"
 main_url='http://fsl.fmrib.ox.ac.uk/fsldownloads/oldversions/'
 if [[ "$os" == "centos7" ]]; then
-        echo "$main_url""fsl-""$version""-centos6_64.tar.gz"
+  echo "$main_url""fsl-""$version""-centos6_64.tar.gz"
 else
-        echo "$main_url""fsl-""$version""-""$os""_64.tar.gz"
+  echo "$main_url""fsl-""$version""-""$os""_64.tar.gz"
 fi
 }
 
 #Parameter:Download URL
 #Function validURL will return true or false according to the status of the url
 function validURL {
-if [[ `wget -S --spider $1  2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then echo "true";fi
+if [[ `wget -S --spider $1  2>&1 | grep 'HTTP/1.1 200 OK'` ]]; then 
+  echo "true";
+fi
 }
 
 # Download function downloads the file in corresponding directory which we pass as the second parameter.
@@ -117,20 +121,19 @@ value=$(awk '{print $1}' "$md5FileName")
 localmd5=$(md5sum < "$fslFileName" | awk '{print $1}')
 #echo "$localmd5"
 rm "$md5FileName"
-if [[ "$value" == "$localmd5" ]];then
-	echo 1
-else
-	echo "MD5 sums doesn't match"
-	exit 0
+if [[ "$value" != "$localmd5" ]];then
+ echo "MD5 sums don't match"
+ exit 1
 fi
 }
 
-# unpack in install dir and install
+# unpack in install dir
 function untar {
 echo "Unpacking installation files ..."
 fslFileName="$1"
 mkdir -p "$installDir" && tar xf "$fslFileName" -C "$installDir"
 }
 
+
 #Function call
-myFslInstaller
+ myFslInstaller

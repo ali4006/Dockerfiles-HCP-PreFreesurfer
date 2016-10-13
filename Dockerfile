@@ -13,20 +13,21 @@ RUN yum update -y && yum install -y \
 # Permit access to fsl installation script (must exist locally)
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh
 
-
-ENV SHELL /bin/bash
-
 # Install fsl to default dir
 RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh
 
 #Clone HCP pipelines
-RUN git clone https://github.com/Washington-University/Pipelines.git pipelines;cp -r pipelines /usr/local/src/;rm -rf pipelines;
+RUN git clone https://github.com/Washington-University/Pipelines.git pipelines; \
+    cp -r pipelines /usr/local/src/; \
+    rm -rf pipelines;
 
 # Set environment variables (run export not needed)
-ENV FSLDIR=/usr/local/src/fsl
-ENV PATH=${FSLDIR}/bin:${PATH}
-ENV HCPPIPEDIR=/usr/local/src/pipelines/PreFreeSurfer
-# FSL environment variables
-ENV FSLOUTPUTTYPE=NIFTI_GZ FSLTCLSH=$FSLDIR/bin/fsltclsh FSLWISH=$FSLDIR/bin/fslwish FSLGECUDAQ=cuda.q
-# HCP environment variables
-ENV HCPPIPEDIR_PreFS=$HCPPIPEDIR/PreFreeSurferPipeline.sh HCPPIPEDIR_Global=$HCPPIPEDIR/scripts
+ENV FSLDIR=/usr/local/src/fsl \
+    PATH=${FSLDIR}/bin:${PATH} \
+    HCPPIPEDIR=/usr/local/src/pipelines/PreFreeSurfer \
+    FSLOUTPUTTYPE=NIFTI_GZ \
+    FSLTCLSH=$FSLDIR/bin/fsltclsh \
+    FSLWISH=$FSLDIR/bin/fslwish \
+    FSLGECUDAQ=cuda.q \
+    HCPPIPEDIR_PreFS=$HCPPIPEDIR/PreFreeSurferPipeline.sh \
+    HCPPIPEDIR_Global=$HCPPIPEDIR/scripts

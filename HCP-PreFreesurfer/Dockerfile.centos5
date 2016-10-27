@@ -1,5 +1,5 @@
 # CentOS with FSL.
-# Build via: docker build -f ./Dockerfile.centos5 -t centos6-fsl-5 .
+# Build via: docker build -f ./Dockerfile.centos5 -t centos5 .
 FROM centos:centos5.11
 MAINTAINER tristan.glatard@concordia.ca
 

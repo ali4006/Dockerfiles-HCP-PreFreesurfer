@@ -1,5 +1,5 @@
 # CentOS with FSL.
-# Build via: docker build -f ./Dockerfile -t centos6-fsl-5 .
+# Build via: docker build -f ./Dockerfile.centos5 -t centos6-fsl-5 .
 FROM centos:centos5.11
 MAINTAINER tristan.glatard@concordia.ca
 
@@ -42,15 +42,16 @@ RUN wget https://github.com/Washington-University/Pipelines/archive/v3.19.0.tar.
     tar zxvf /pipelines.tar.gz -C /usr/local/src/; \
     mv /usr/local/src/Pipelines-* /usr/local/src/pipelines; \
     rm -rf pipelines.tar.gz; \
+    mkdir -p /usr/local/src/tools; \
     wget https://ftp.humanconnectome.org/workbench/workbench-rh_linux64-v1.2.3.zip -O workbench.zip; \
-    unzip workbench.zip -d /usr/local/src/; \
+    unzip workbench.zip -d /usr/local/src/tools; \
     rm -rf workbench.zip;
 
 # Set environment variables (run export not needed)
 ENV FSLDIR=/usr/local/src/fsl \
     FSLOUTPUTTYPE=NIFTI_GZ \
     FSLGECUDAQ=cuda.q \
-    CARET7DIR=/usr/local/src/workbench/
+    CARET7DIR=/usr/local/src/tools/workbench/
 
 ENV PATH=${FSLDIR}/bin:${PATH} \
     FSLTCLSH=${FSLDIR}/bin/fsltclsh \

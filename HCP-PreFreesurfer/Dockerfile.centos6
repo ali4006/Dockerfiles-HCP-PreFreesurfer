@@ -37,7 +37,7 @@ RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh
 
 #Clone HCP pipelines
 # Fix the version of pipelines 
-RUN wget https://github.com/Washington-University/Pipelines/archive/v3.4.0.tar.gz -O pipelines.tar.gz; \
+RUN wget https://github.com/Washington-University/Pipelines/archive/v3.19.0.tar.gz -O pipelines.tar.gz; \
     tar zxvf /pipelines.tar.gz -C /usr/local/src/; \
     mv /usr/local/src/Pipelines-* /usr/local/src/pipelines; \
     rm -rf pipelines.tar.gz; \

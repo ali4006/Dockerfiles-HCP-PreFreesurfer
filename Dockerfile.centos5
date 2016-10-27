@@ -19,16 +19,13 @@ RUN yum update -y && yum install -y \
     libpng.x86_64 \
     libSM.x86_64 \
     libXrender.x86_64 \
+    numpy \
     openssl-devel \
     perl-ExtUtils-MakeMaker \
     tar \
     unzip \
     wget \
     zlib-devel
-
-RUN yum install -y \
-    python-pip \
-    python-devel
 
 # Permit access to fsl installation script (must exist locally)
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh
@@ -62,7 +59,6 @@ ENV PATH=${FSLDIR}/bin:${PATH} \
 ENV HOME=/usr/local/src \
     PATH=${PATH}:/usr/local/src/pipelines/Examples/Scripts
 
-#Fix numpy version and link pipelines folder
+# Link pipelines folder
 RUN mkdir /usr/local/src/projects; \
-    ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines; \
-    pip install numpy;
+    ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines;

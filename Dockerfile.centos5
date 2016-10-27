@@ -27,10 +27,6 @@ RUN yum update -y && yum install -y \
     wget \
     zlib-devel
 
-RUN yum install -y \
-    python-pip \
-    python-devel
-
 # Permit access to fsl installation script (must exist locally)
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh
 

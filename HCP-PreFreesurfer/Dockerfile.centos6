@@ -38,10 +38,10 @@ RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh
 #Clone HCP pipelines
 # Fix the version of pipelines 
 RUN wget https://github.com/Washington-University/Pipelines/archive/v3.19.0.tar.gz -O pipelines.tar.gz; \
-    mkdir -p /usr/local/src/tools; \
     tar zxvf /pipelines.tar.gz -C /usr/local/src/; \
     mv /usr/local/src/Pipelines-* /usr/local/src/pipelines; \
     rm -rf pipelines.tar.gz; \
+    mkdir -p /usr/local/src/tools; \
     wget https://ftp.humanconnectome.org/workbench/workbench-rh_linux64-v1.2.3.zip -O workbench.zip; \
     unzip workbench.zip -d /usr/local/src/tools/; \
     rm -rf workbench.zip;

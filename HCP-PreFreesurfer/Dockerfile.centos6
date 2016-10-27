@@ -1,10 +1,11 @@
 # CentOS with FSL.
-# Build via: docker build -f ./Dockerfile -t centos6-fsl-5 .
-FROM centos:centos6
+# Build via: docker build -f ./Dockerfile -t centos6 .
+FROM centos:centos6.8
 MAINTAINER laletscaria@yahoo.co.in
 
 # Update the image with the latest packages
-# Fix the version of GCC 
+# Note: the versions of these packages may change over time. 
+# Different builds of the container may contain different versions.
 RUN yum update -y && yum install -y \
     bc \
     curl-devel \ 
@@ -43,7 +44,7 @@ RUN wget https://github.com/Washington-University/Pipelines/archive/v3.19.0.tar.
     rm -rf pipelines.tar.gz; \
     mkdir -p /usr/local/src/tools; \
     wget https://ftp.humanconnectome.org/workbench/workbench-rh_linux64-v1.2.3.zip -O workbench.zip; \
-    unzip workbench.zip -d /usr/local/src/tools/; \
+    unzip workbench.zip -d /usr/local/src/tools; \
     rm -rf workbench.zip;
 
 # Set environment variables (run export not needed)

@@ -1,7 +1,7 @@
 # CentOS with FSL.
 # Build via: docker build -f ./Dockerfile -t centos6-fsl-5 .
 FROM centos:centos5.11
-MAINTAINER tritan.glatard@concordia.ca
+MAINTAINER tristan.glatard@concordia.ca
 
 # Update the image with the latest packages
 # Note: the versions of these packages may change over time. 
@@ -44,7 +44,6 @@ RUN wget https://github.com/Washington-University/Pipelines/archive/v3.19.0.tar.
     rm -rf pipelines.tar.gz; \
     wget https://ftp.humanconnectome.org/workbench/workbench-rh_linux64-v1.2.3.zip -O workbench.zip; \
     unzip workbench.zip -d /usr/local/src/; \
-    mv /usr/local/src/workbench/bin_rh_linux64 /usr/local/src/workbench/bin_linux64; \
     rm -rf workbench.zip;
 
 # Set environment variables (run export not needed)

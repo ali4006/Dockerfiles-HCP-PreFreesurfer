@@ -67,7 +67,7 @@ function myFslInstaller {
 function getMD5Url {
  version="$1"
  os="$2"
- os="${os,,}"
+ os=`echo $os | tr '[:upper:]' '[:lower:]'`
  main_url='http://fsl.fmrib.ox.ac.uk/fsldownloads/md5sums/'
  echo "$main_url""fsl-""$version-""$os""_64.tar.gz.md5"
 }
@@ -77,7 +77,7 @@ function getMD5Url {
 function getDownloadURL {
  version="$1"
  os="$2"
- os="${os,,}"
+ os=`echo $os | tr '[:upper:]' '[:lower:]'`
  #echo "$os"
  main_url='http://fsl.fmrib.ox.ac.uk/fsldownloads/oldversions/'
  echo "$main_url""fsl-""$version""-""$os""_64.tar.gz"

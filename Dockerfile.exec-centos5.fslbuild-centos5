@@ -65,3 +65,6 @@ RUN mkdir /usr/local/src/projects; \
 
 # Add monitoring script
 ADD ./monitor.sh /bin
+
+# Add execution directory creation script
+ADD ./create-execution-dir.sh /bin

@@ -1,6 +1,6 @@
 # CentOS with FSL.
-# Build via: docker build -f ./Dockerfile -t centos6 .
-FROM centos:centos6.8
+# Build via: docker build -f ./Dockerfile -t centos7 .
+FROM centos:centos7.2.1511
 MAINTAINER laletscaria@yahoo.co.in
 
 # Update the image with the latest packages
@@ -66,6 +66,9 @@ ENV HOME=/usr/local/src \
 RUN mkdir /usr/local/src/projects; \
     ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines; \
     pip install numpy;
-    
+
 # Add monitoring script
 ADD ./monitor.sh /bin
+
+# Add execution directory creation script
+ADD ./create-execution-dir.sh /bin

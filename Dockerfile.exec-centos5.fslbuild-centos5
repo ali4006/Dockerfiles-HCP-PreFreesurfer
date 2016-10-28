@@ -1,6 +1,6 @@
 # CentOS with FSL.
-# Build via: docker build -f ./Dockerfile.centos6 -t centos6-fsl-centos5 .
-FROM centos:centos6.8
+# Build via: docker build -f ./Dockerfile.centos5 -t centos5 .
+FROM centos:centos5.11
 MAINTAINER tristan.glatard@concordia.ca
 
 # Update the image with the latest packages
@@ -66,3 +66,6 @@ RUN mkdir /usr/local/src/projects; \
 
 # Add monitoring script
 ADD ./monitor.sh /bin
+
+# Add execution directory creation script
+ADD ./create-execution-dir.sh /bin

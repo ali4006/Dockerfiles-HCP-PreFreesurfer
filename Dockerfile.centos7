@@ -63,4 +63,7 @@ ENV HOME=/usr/local/src \
 
 #Fix numpy version and link pipelines folder
 RUN mkdir /usr/local/src/projects; \
-    ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines; 
+    ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines;
+
+# Add monitoring script
+ADD ./monitor.sh /bin

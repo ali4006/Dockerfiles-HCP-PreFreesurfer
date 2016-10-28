@@ -11,14 +11,15 @@ RUN yum update -y && yum install -y \
     curl-devel \ 
     epel-release \
     expat-devel \
+    fontconfig.x86_64 \
     freetype.x86_64 \
     gcc \
     gettext-devel \
     git \
-    libfontconfig.x86_64 \
     libpng.x86_64 \
     libSM.x86_64 \
     libXrender.x86_64 \
+    numpy \
     openssl-devel \
     perl-ExtUtils-MakeMaker \
     tar \
@@ -64,8 +65,7 @@ ENV HOME=/usr/local/src \
 
 #Fix numpy version and link pipelines folder
 RUN mkdir /usr/local/src/projects; \
-    ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines; \
-    pip install numpy;
+    ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines;
     
 # Add monitoring script
 ADD ./monitor.sh /bin

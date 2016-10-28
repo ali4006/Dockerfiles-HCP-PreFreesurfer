@@ -11,11 +11,11 @@ RUN yum update -y && yum install -y \
     curl-devel \ 
     epel-release \
     expat-devel \
+    fontconfig.x86_64 \
     freetype.x86_64 \
     gcc \
     gettext-devel \
     git \
-    libfontconfig.x86_64 \
     libpng.x86_64 \
     libpng12.x86_64 \
     libSM.x86_64 \

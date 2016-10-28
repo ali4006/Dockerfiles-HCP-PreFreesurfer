@@ -19,6 +19,7 @@ RUN yum update -y && yum install -y \
     libpng.x86_64 \
     libpng12.x86_64 \
     libSM.x86_64 \
+    libstdc++.x86_64 \
     libXrender.x86_64 \
     numpy \
     openssl-devel \

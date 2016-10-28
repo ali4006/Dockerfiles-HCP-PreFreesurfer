@@ -66,3 +66,6 @@ ENV HOME=/usr/local/src \
 RUN mkdir /usr/local/src/projects; \
     ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines; \
     pip install numpy;
+    
+# Add monitoring script
+ADD ./monitor.sh /bin

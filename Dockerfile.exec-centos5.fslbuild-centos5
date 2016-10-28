@@ -1,7 +1,7 @@
 # CentOS with FSL.
 # Build via: docker build -f ./Dockerfile.centos5 -t centos5 .
 FROM centos:centos5.11
-MAINTAINER tristan.glatard@concordia.ca
+MAINTAINER laletscaria@yahoo.co.in
 
 # Update the image with the latest packages
 # Note: the versions of these packages may change over time. 
@@ -32,7 +32,7 @@ RUN yum update -y && yum install -y \
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh
 
 # Install fsl to default dir
-RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh 5.0.6 CentOS5 /usr/local/src /usr/local/etc/
+RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh 5.0.6 CentOS5 /usr/local/src /usr/local/etc
 
 #Clone HCP pipelines
 # Fix the version of pipelines 

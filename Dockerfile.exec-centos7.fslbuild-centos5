@@ -62,7 +62,7 @@ ENV PATH=${FSLDIR}/bin:${PATH} \
 ENV HOME=/usr/local/src \
     PATH=${PATH}:/usr/local/src/pipelines/Examples/Scripts
 
-#Fix numpy version and link pipelines folder
+# Link pipelines folder
 RUN mkdir /usr/local/src/projects; \
     ln -s /usr/local/src/pipelines /usr/local/src/projects/Pipelines;
 

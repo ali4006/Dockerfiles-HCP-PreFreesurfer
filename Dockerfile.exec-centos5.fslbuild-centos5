@@ -8,7 +8,7 @@ MAINTAINER laletscaria@yahoo.co.in
 # Different builds of the container may contain different versions.
 RUN yum update -y && yum install -y \
     bc \
-    curl-devel \ 
+    curl-devel \
     epel-release \
     expat-devel \
     fontconfig.x86_64 \
@@ -20,13 +20,15 @@ RUN yum update -y && yum install -y \
     libSM.x86_64 \
     libstdc++.x86_64 \
     libXrender.x86_64 \
-    numpy \
     openssl-devel \
     perl-ExtUtils-MakeMaker \
     tar \
     unzip \
     wget \
     zlib-devel
+
+RUN yum install -y \		
+    numpy.x86_64
 
 # Permit access to fsl installation script (must exist locally)
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh

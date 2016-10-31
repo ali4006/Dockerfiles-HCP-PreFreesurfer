@@ -20,6 +20,7 @@ RUN yum update -y && yum install -y \
     libSM.x86_64 \
     libstdc++.x86_64 \
     libXrender.x86_64 \
+    libXext.x86_64 \
     openssl-devel \
     perl-ExtUtils-MakeMaker \
     tar \

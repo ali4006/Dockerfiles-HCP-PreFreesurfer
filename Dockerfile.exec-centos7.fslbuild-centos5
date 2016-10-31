@@ -1,5 +1,5 @@
 # CentOS with FSL.
-# Build via: docker build -f ./Dockerfile -t centos7 .
+# Build via: docker build -f ./Dockerfile.exec-centos7.fslbuild-centos5 -t centos7 .
 FROM centos:centos7.2.1511
 MAINTAINER laletscaria@yahoo.co.in
 
@@ -8,7 +8,7 @@ MAINTAINER laletscaria@yahoo.co.in
 # Different builds of the container may contain different versions.
 RUN yum update -y && yum install -y \
     bc \
-    curl-devel \ 
+    curl-devel \
     epel-release \
     expat-devel \
     fontconfig.x86_64 \

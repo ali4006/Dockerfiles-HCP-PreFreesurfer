@@ -13,7 +13,6 @@ RUN yum update -y && yum install -y \
     expat-devel \
     fontconfig.x86_64 \
     freetype.x86_64 \
-    gcc \
     gettext-devel \
     git \
     libpng.x86_64 \
@@ -22,13 +21,15 @@ RUN yum update -y && yum install -y \
     libstdc++.x86_64 \
     libXrender.x86_64 \
     libXext.x86_64 \
-    numpy \
     openssl-devel \
     perl-ExtUtils-MakeMaker \
     tar \
     unzip \
     wget \
     zlib-devel
+
+RUN yum install -y \
+    numpy.x86_64
 
 # Permit access to fsl installation script (must exist locally)
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh

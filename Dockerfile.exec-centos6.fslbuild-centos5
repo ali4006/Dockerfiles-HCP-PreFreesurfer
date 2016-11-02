@@ -13,7 +13,6 @@ RUN yum update -y && yum install -y \
     expat-devel \
     fontconfig.x86_64 \
     freetype.x86_64 \
-    gcc \
     gettext-devel \
     git \
     libpng.x86_64 \

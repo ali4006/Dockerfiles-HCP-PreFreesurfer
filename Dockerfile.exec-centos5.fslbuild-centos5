@@ -59,7 +59,7 @@ RUN yum install -y \
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh
 
 # Install fsl to default dir
-RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh 5.0.6 CentOS5 /usr/local/src /usr/local/etc
+RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh 5.0.6 CentOS5 /usr/local/src /usr/local/etc/
 
 #Clone HCP pipelines
 # Fix the version of pipelines 

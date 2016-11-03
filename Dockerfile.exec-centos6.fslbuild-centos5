@@ -13,7 +13,7 @@ MAINTAINER laletscaria@yahoo.co.in
 
 # bc- calculator for fslreorient2std
 # curl-devel - cURL is a software package which consists of command line tool and a library for transferring data using URL syntax
-# epel-relese to help pip installation
+# epel-release to help pip installation
 # expat-devel - xml parser library
 # fontconfig - Fontconfig package contains a library and support programs used for configuring and customizing font access
 # freetype contains a library which allows applications to properly render TrueType fonts

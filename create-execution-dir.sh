@@ -17,7 +17,7 @@ fi
 subjectDir=$1
 test -d ./${subjectDir} || die "${subjectDir} is not a directory or it is not in the current working folder."
 
-execfolder=$2
+execFolder=$2
 # create new directory
 mkdir -p ${execFolder}/${subjectDir}
 

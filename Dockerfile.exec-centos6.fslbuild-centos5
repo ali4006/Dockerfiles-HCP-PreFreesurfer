@@ -6,6 +6,31 @@ MAINTAINER laletscaria@yahoo.co.in
 # Update the image with the latest packages
 # Note: the versions of these packages may change over time. 
 # Different builds of the container may contain different versions.
+
+############
+# Packages #
+###########
+
+# bc- calculator for fslreorient2std
+# curl-devel - cURL is a software package which consists of command line tool and a library for transferring data using URL syntax
+# epel-relese to help pip installation
+# expat-devel - xml parser library
+# fontconfig - Fontconfig package contains a library and support programs used for configuring and customizing font access
+# freetype contains a library which allows applications to properly render TrueType fonts
+# gettext helps in producing multi-lingual messages
+# git library for cloining pipelines repository.
+# libpng - libpng is the official PNG reference library
+# libSM - is a library of generally useful C abstractions
+# libstdc++ - a powerful set of reuseable tools in the form of the C++ Standard Library
+# libXrender - used when compiling programs that use freetype fonts
+# libXext - Xorg libraries provide library routines that are used within all X Window applications
+# openssl-devel - for secure communication
+# perl-ExtUtils-MakeMaker - designed to write a Makefile for an extension module from a Makefile.PL
+# tar,unzip - to extract .tar.gz and .zip files
+# wget to get files or status from URL's
+# zlib-devel - to support FMRIB file IO
+# numpy - to support FMRIB pipeline execution
+
 RUN yum update -y && yum install -y \
     bc \
     curl-devel \
@@ -13,7 +38,6 @@ RUN yum update -y && yum install -y \
     expat-devel \
     fontconfig.x86_64 \
     freetype.x86_64 \
-    gcc \
     gettext-devel \
     git \
     libpng.x86_64 \

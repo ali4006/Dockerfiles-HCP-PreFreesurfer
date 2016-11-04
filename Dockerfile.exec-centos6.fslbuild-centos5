@@ -51,7 +51,8 @@ RUN yum update -y && yum install -y \
     wget \
     zlib-devel
 
-RUN yum clean all && yum install -y \
+RUN rpm --rebuilddb ; \
+    yum clean all && yum install -y \
     numpy.x86_64
 
 # Permit access to fsl installation script (must exist locally)

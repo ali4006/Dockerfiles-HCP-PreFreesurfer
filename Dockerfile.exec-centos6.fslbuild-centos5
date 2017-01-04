@@ -97,6 +97,6 @@ ADD ./monitor.sh /bin
 # Add execution directory creation script
 ADD ./create-execution-dir.sh /bin
 
-# Add execution directory creation script
-ADD ./create-execution-dir.sh /bin
+#Add script to generate checksums
+ADD ./checksums.sh /bin
 

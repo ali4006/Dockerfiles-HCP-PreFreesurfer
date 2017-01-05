@@ -3,6 +3,8 @@
 set -u
 set -e
 
+SUBJECT_FOLDER=$1
+
 echo "###########################################"
 echo "############ Checksum of docker image #####"
 echo "###########################################"
@@ -13,7 +15,7 @@ echo "*******************************************"
 echo "************ Checksum of files ************"
 echo "*******************************************"
 
-find . -type f | sort | xargs md5sum
+find ${SUBJECT_FOLDER} -type f | sort | xargs md5sum
 
 
 

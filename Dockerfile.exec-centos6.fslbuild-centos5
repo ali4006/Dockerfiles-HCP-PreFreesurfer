@@ -100,3 +100,7 @@ ADD ./create-execution-dir.sh /bin
 #Add script to generate checksums
 ADD ./checksums.sh /bin
 
+#Add command line arguments script
+ADD ./command-line-script.sh /bin
+
+

@@ -3,6 +3,17 @@
 set -u
 set -e
 
+function die {
+    echo -e $*
+    # will exit the script since the error flag is set
+    return 1
+}
+
+if [ $# != 1 ]
+then
+    die "Usage: $0 <subject_folder> \n Input the subject folder name."
+fi
+
 SUBJECT_FOLDER=$1
 
 echo "###########################################"

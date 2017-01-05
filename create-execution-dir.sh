@@ -19,12 +19,8 @@ test -d ./${subjectDir} || die "${subjectDir} is not a directory or it is not in
 
 execFolder=$2
 # create new directory
-mkdir -p ${execFolder}/${subjectDir}
+mkdir -p ${execFolder}
 
-# link content of old directory in new directory
-for dirent in `ls ${subjectDir}`
-do
-    ln -s ${PWD}/${subjectDir}/${dirent} ${execFolder}/${subjectDir}/${dirent}
-    test -e ${execFolder}/${subjectDir}/${dirent} || die "Invalid file: exec/${subjectDir}/${dirent}"
-done
+# copy the subject directory
+cp -R ${subjectDir} ${execFolder} || die "Cannot cp ${subjectDir} to ${execFolder}"
 

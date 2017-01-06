@@ -17,6 +17,10 @@ fi
 SUBJECT_FOLDER=$1
 QSUB_FILE=".qsub.out.*"
 
+echo "###########################################"
+echo "############ Checksum of docker image #####"
+echo "###########################################"
+
 (ls ${QSUB_FILE} && grep "Digest: sha256:" ${QSUB_FILE}) || (die ${SUBJECT_FOLDER} "Cannot find sha256 digest of docker image")
 
 echo "*******************************************"

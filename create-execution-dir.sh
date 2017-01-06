@@ -22,5 +22,5 @@ execFolder=$2
 mkdir -p ${execFolder}
 
 # copy the subject directory
-cp -R ${subjectDir} ${execFolder} || die "Cannot cp ${subjectDir} to ${execFolder}"
+cp -R ${subjectDir}/ ${execFolder} || die "Cannot cp ${subjectDir} to ${execFolder}"
 

@@ -15,18 +15,19 @@ then
 fi
 
 SUBJECT_FOLDER=$1
+QSUB_FILE=".qsub.out.*"
 
-echo "###########################################"
-echo "############ Checksum of docker image #####"
-echo "###########################################"
-
-grep "Digest: sha256:" .qsub.out.*
+count=`ls -a 2>/dev/null | grep $QSUB_FILE | wc -l`
+if [ $count != 0 ]
+then
+    echo "###########################################"
+    echo "############ Checksum of docker image #####"
+    echo "###########################################"
+    grep "Digest: sha256:" $QSUB_FILE
+fi
 
 echo "*******************************************"
 echo "************ Checksum of files ************"
 echo "*******************************************"
 
 find ${SUBJECT_FOLDER} -type f | sort | xargs md5sum
-
-
-

@@ -4,9 +4,9 @@ set -u
 set -e
 
 function die {
-    echo -e $*
+    echo -e "ERROR: $*:">&2
     # will exit the script since the error flag is set
-    return 1
+    exit 1
 }
 
 if [ $# != 1 ]
@@ -15,13 +15,18 @@ then
 fi
 
 SUBJECT_FOLDER=$1
-QSUB_FILE=".qsub.out.*"
+QSUB_FILE=".science.out.*"
+
+echo "Hello from checksum: I'm in $PWD, subject folder is $1, here is the output of ls -a:"
+ls -a
+echo "and here is the result of the find command:"
+find ${SUBJECT_FOLDER} -type f
 
 echo "###########################################"
 echo "############ Checksum of docker image #####"
 echo "###########################################"
 
-(ls ${QSUB_FILE} && grep "Digest: sha256:" ${QSUB_FILE}) || (die ${SUBJECT_FOLDER} "Cannot find sha256 digest of docker image")
+(ls ${QSUB_FILE} && grep "Digest: sha256:" ${QSUB_FILE}) || die "Cannot find sha256 digest of docker image"
 
 echo "*******************************************"
 echo "************ Checksum of files ************"

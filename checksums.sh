@@ -17,11 +17,6 @@ fi
 SUBJECT_FOLDER=$1
 QSUB_FILE=".science.out.*"
 
-echo "Hello from checksum: I'm in $PWD, subject folder is $1, here is the output of ls -a:"
-ls -a
-echo "and here is the result of the find command:"
-find ${SUBJECT_FOLDER} -type f
-
 echo "###########################################"
 echo "############ Checksum of docker image #####"
 echo "###########################################"

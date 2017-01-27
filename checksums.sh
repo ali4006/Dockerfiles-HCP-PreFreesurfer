@@ -27,5 +27,6 @@ echo "*******************************************"
 echo "************ Checksum of files ************"
 echo "*******************************************"
 
-find ${SUBJECT_FOLDER} -type f | sort | xargs md5sum
+find -L ${SUBJECT_FOLDER} -type f | sort | xargs md5sum
+
 

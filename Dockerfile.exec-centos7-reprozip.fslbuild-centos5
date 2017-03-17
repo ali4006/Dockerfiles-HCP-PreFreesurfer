@@ -1,6 +1,6 @@
 # CentOS with FSL.
 # Build via: docker build -f ./Dockerfile.exec-centos7-reprozip.fslbuild-centos5 -t centos7-reprozip .
-# Command to start the container : docker run -it --rm --security-opt seccomp=unconfined -w /data -v /home/lscaria/BigDataLab:/data centos7-repro /bin/bash
+# Command to start the container : docker run -it --rm --security-opt seccomp=unconfined -w <working-dir-path> -v <local-dir-path-to-be-mounted>:/data centos7-repro /bin/bash
 # Option --security-opt seccomp=unconfined is in order to allow reprozip trace to work and trace the processes 
 # Command to run the prefreesurfer script : reprozip trace.txt PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=100408 --runlocal
 # --StudyFolder - The folder containing the subjects

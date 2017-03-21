@@ -12,16 +12,18 @@ function die {
 INITDIR=$PWD
 
 if [ $# -lt 2 ]; then
-  die ${INITDIR} "Needs 2 arguments and an optional flag. Usage: $0 <subject_folder> <name> <True/False>"
+  die ${INITDIR} "Needs 2 arguments and an optional flag. If you keep -r flag as an input, then the reprozip trace process is triggered . Usage: $0 [-r] <subject_folder> <name>"
 fi
 
-SUBJECT_FOLDER=$1
-NAME=$2
-#If reprozip flag is set
-if [$# -gt 2]; then
-REPROZIP_FLAG=$3
-else
 REPROZIP_FLAG=false
+#If reprozip flag is set
+if [ $# -eq 3 ]; then
+  REPROZIP_FLAG=true
+  SUBJECT_FOLDER=$2
+  NAME=$3
+else
+  SUBJECT_FOLDER=$1
+  NAME=$2
 fi
 
 EXECUTION_DIR=exec
@@ -34,18 +36,18 @@ monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER}/monitor.txt                    
 cd ${EXECUTION_DIR}                                                                      		|| die ${INITDIR} "Cannot cd to ${EXECUTION_DIR}."
 
 #Adding the reprozip command to trace the processing of subjects
-if [${REPROZIP_FLAG}]; then
-reprozip trace PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal || die ${INITDIR} "Pipeline failed."
+if [ ${REPROZIP_FLAG} = true ]; then
+  reprozip trace PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal || die ${INITDIR} "Pipeline failed."
 else
-PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal                || die ${INITDIR} "Pipeline failed."
+  PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal                || die ${INITDIR} "Pipeline failed."
 fi
 
 cd ${INITDIR}                                                                            		|| die ${INITDIR} "cd .. failed."
 checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER} > ${AFTER_FILE}                          		|| die ${INITDIR} "Checksum script failed."
 
 #Copying the .reprozip-trace folder in execution directory to the subject folder.
-if [${REPROZIP_FLAG}]; then
-cp -r ${EXECUTION_DIR}/.reprozip-trace ${EXECUTION_DIR}/${SUBJECT_FOLDER}
+if [ ${REPROZIP_FLAG} = true ]; then
+  cp -r ${EXECUTION_DIR}/.reprozip-trace ${EXECUTION_DIR}/${SUBJECT_FOLDER}
 fi
 
 ln -s ${EXECUTION_DIR}/${SUBJECT_FOLDER} ${SUBJECT_FOLDER}-${NAME}                       		|| die ${INITDIR} "Cannot link results."

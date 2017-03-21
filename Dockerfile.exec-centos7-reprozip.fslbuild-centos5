@@ -6,7 +6,7 @@
 # --StudyFolder - The folder containing the subjects
 # --Subjlist - quoted, space separated list of subject IDs on which to run the pipeline
 # --runlocal     - if specified (without an argument), processing is run on "this" machine as opposed to being submitted to a computing grid
-FROM centos:centos7.2.1511
+FROM bigdatalabteam/hcp-prefreesurfer:exec-centos7-fslbuild-centos5-latest 
 MAINTAINER laletscaria@yahoo.co.in
 
 # Update the image with the latest packages

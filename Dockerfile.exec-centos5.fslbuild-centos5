@@ -31,6 +31,10 @@ MAINTAINER laletscaria@yahoo.co.in
 # zlib-devel - to support FMRIB file IO
 # numpy - to support FMRIB pipeline execution
 
+# Adjust yum repositories since CentOS5 now reached EOL
+ADD ./yum.repos/libselinux.repo /etc/yum.repos.d
+ADD ./yum.repos/CentOS-Base.repo /etc/yum.repos.d
+
 RUN yum update -y && yum install -y \
     bc \
     curl-devel \
@@ -103,3 +107,4 @@ ADD ./checksums.sh /bin
 
 #Add command line arguments script
 ADD ./command-line-script.sh /bin
+

@@ -13,7 +13,7 @@ MAINTAINER laletscaria@yahoo.co.in
 
 # bc- calculator for fslreorient2std
 # curl-devel - cURL is a software package which consists of command line tool and a library for transferring data using URL syntax
-# epel-relese to help pip installation
+# epel-release to help pip installation
 # expat-devel - xml parser library
 # fontconfig - Fontconfig package contains a library and support programs used for configuring and customizing font access
 # freetype contains a library which allows applications to properly render TrueType fonts
@@ -53,14 +53,15 @@ RUN yum update -y && yum install -y \
     wget \
     zlib-devel
 
-RUN yum install -y \
+RUN rpm --rebuilddb ; \
+    yum clean all && yum install -y \
     numpy.x86_64
 
 # Permit access to fsl installation script (must exist locally)
 ADD ./myFslInstallerScript.sh /myFslInstallerScript.sh
 
 # Install fsl to default dir
-RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh 5.0.6 CentOS5 /usr/local/src /usr/local/etc
+RUN echo -e "/usr/local/src" | ./myFslInstallerScript.sh 5.0.6 CentOS5 /usr/local/src /usr/local/etc/
 
 #Clone HCP pipelines
 # Fix the version of pipelines 
@@ -97,3 +98,11 @@ ADD ./monitor.sh /bin
 
 # Add execution directory creation script
 ADD ./create-execution-dir.sh /bin
+
+#Add script to generate checksums
+ADD ./checksums.sh /bin
+
+#Add command line arguments script
+ADD ./command-line-script.sh /bin
+
+

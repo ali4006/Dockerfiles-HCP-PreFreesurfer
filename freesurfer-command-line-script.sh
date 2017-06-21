@@ -38,7 +38,7 @@ monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER}/monitor.txt                    
 cd ${EXECUTION_DIR}                                                                      		  || die ${INITDIR} "Cannot cd to ${EXECUTION_DIR}."
 
 #Source the Freesurfer
-source ${FREESURFER_HOME}/SetUpFreeSurfers.sh
+source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
 
 #Adding the reprozip command to trace the processing of subjects
 if [ ${REPROZIP_FLAG} = true ]; then

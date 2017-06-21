@@ -19,7 +19,7 @@ MAINTAINER laletscaria@yahoo.co.in
 # libXmu - Miscellaneous utility library
 # perl   - Perl Programming Language
 # tcsh   - tcs shell
-# which  - Command to find the path of the execuatables
+# which  - Command to find the path of the executables
 
 RUN yum install -y \
     libGLU \

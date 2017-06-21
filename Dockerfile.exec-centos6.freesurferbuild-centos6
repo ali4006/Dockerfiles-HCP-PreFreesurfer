@@ -17,10 +17,10 @@ MAINTAINER laletscaria@yahoo.co.in
 ###########
 # libGLU - OpenGL utility library
 # libXmu - Miscellaneous utility library
-# netcdf - netCDF library also defines a machine-independent format for representing scientific data
+# netcdf - netCDF library defines a machine-independent format for representing scientific data
 # perl   - Perl Programming Language
 # tcsh   - tcs shell
-# which  - Command to find the path of the execuatables
+# which  - Command to find the path of the executables
 
 
 RUN yum install -y \

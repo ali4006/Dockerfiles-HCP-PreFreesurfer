@@ -51,7 +51,7 @@ else
   SUBJECT_FOLDER=$1
   NAME=$2
   #Making sure that the script is not freesurfer without a license file.
-  if [ ${SCRIPT} != "-fs" ];then
+  if [ $3 != "-fs" ];then
     SCRIPT=$3
   else
     die ${INITDIR} "Freesurfer flag should be followed by a path to the license file as the next parameter"

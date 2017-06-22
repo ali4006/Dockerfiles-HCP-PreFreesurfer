@@ -38,11 +38,10 @@ ENV FREESURFER_HOME=/usr/local/src/freesurfer
 
 
 # Add the personal license text file to the Freesurfer directory
-# Example to add the license text - ADD ./license.txt /usr/local/src/freesurfer/license.txt
+# Example to add the license text - 
+ADD ./license.txt /usr/local/src/freesurfer/license.txt
 
 #Add the freesurfer home env variable to path
 ENV PATH=${PATH}:${FREESURFER_HOME}/bin
 
-#Add the freesurfer command line script
-ADD ./freesurfer-command-line-script.sh /bin 
 

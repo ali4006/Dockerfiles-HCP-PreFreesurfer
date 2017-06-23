@@ -1,0 +1,45 @@
+# CentOS5 with FSL and Freesurfer
+# Base image used for this Dockerfile is an image with centos and FSL installed in it.
+# Build using the commaind: docker build -f ./<filename> -t <repo-name>:<image-name> .
+
+# How to run the FreeSurfer Pipeline
+# 1. docker run --rm -it -v $PWD:/work -w /work <docker-image-name> /bin/bash
+# -w - wokring directory
+# -v - to mount a directory
+# 2. Source the SetUpFreeSurfer script. Command - "source ${FREESURFER_HOME/SetUpFreeSurfer.sh"
+# 3. Run the FreeSurfer Pipeline. Example - "FreeSurferPipelineBatch.sh --StudyFolder=/work --Subjlist=101006 --runlocal"
+
+FROM bigdatalabteam/hcp-prefreesurfer:exec-centos5-fslbuild-centos5-latest 
+MAINTAINER laletscaria@yahoo.co.in
+
+############
+# Packages #
+###########
+# libGLU - OpenGL utility library
+# libXmu - Miscellaneous utility library
+# perl   - Perl Programming Language
+# tcsh   - tcs shell
+# which  - Command to find the path of the executables
+
+RUN yum install -y \
+    libGLU \
+    libXmu \
+    perl \
+    tcsh \
+    which
+
+#Install Freesurfer 5.3.0 HCP centos4 build
+RUN wget ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/5.3.0-HCP/freesurfer-Linux-centos4_x86_64-stable-pub-v5.3.0-HCP.tar.gz -O freesurfer-centos4-v5.3.0.tar.gz; \
+    tar -zxvf freesurfer-centos4-v5.3.0.tar.gz -C /usr/local/src; \
+    rm -rf freesurfer-centos4-v5.3.0.tar.gz; 
+
+# Set environment variable for FreeSurfer
+ENV FREESURFER_HOME=/usr/local/src/freesurfer
+
+
+# Add the personal license text file to the Freesurfer directory
+# Example to add the license text - ADD ./license.txt /usr/local/src/freesurfer/license.txt
+
+#Add the freesurfer home env variable to path
+ENV PATH=${PATH}:${FREESURFER_HOME}/bin
+

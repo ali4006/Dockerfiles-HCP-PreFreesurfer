@@ -1,4 +1,4 @@
-# CentOS7 with FSL and Freesurfer
+# CentOS6 with FSL and Freesurfer
 # Base image used for this Dockerfile is an image with centos and FSL installed in it.
 # Build using the commaind: docker build -f ./<filename> -t <repo-name>:<image-name> .
 
@@ -9,7 +9,7 @@
 # 2. Source the SetUpFreeSurfer script. Command - "source ${FREESURFER_HOME/SetUpFreeSurfer.sh"
 # 3. Run the FreeSurfer Pipeline . Example - "FreeSurferPipelineBatch.sh --StudyFolder=/work --Subjlist=101006 --runlocal"
 
-FROM bigdatalabteam/hcp-prefreesurfer:exec-centos7-fslbuild-centos5-latest 
+FROM bigdatalabteam/hcp-prefreesurfer:exec-centos6-fslbuild-centos5-latest 
 MAINTAINER laletscaria@yahoo.co.in
 
 ############
@@ -42,3 +42,6 @@ ENV FREESURFER_HOME=/usr/local/src/freesurfer
 
 #Add the freesurfer home env variable to path
 ENV PATH=${PATH}:${FREESURFER_HOME}/bin
+
+#Add the freesurfer command line script
+ADD ./freesurfer-command-line-script.sh /bin

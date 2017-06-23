@@ -11,8 +11,8 @@ function die {
 
 INITDIR=$PWD
 
-if [ $# -lt 2 ]; then
-  die ${INITDIR} "Needs 2 arguments and an optional flag. If you keep -r flag as an input, then the reprozip trace process is triggered . Usage: $0 [-r] <subject_folder> <name>"
+if [ $# -lt 3 ]; then
+  die ${INITDIR} "Needs 3 arguments and an optional flag. If you keep -r flag as an input, then the reprozip trace process is triggered . Usage: $0 [-r] <subject_folder> <name> <path/to/the/license/text>"
 fi
 
 REPROZIP_FLAG=false
@@ -22,10 +22,12 @@ if [ $# -eq 3 ]; then
     REPROZIP_FLAG=true
     SUBJECT_FOLDER=$2
     NAME=$3
+    LICENSE=$4
   fi
 else
   SUBJECT_FOLDER=$1
   NAME=$2
+  LICENSE=$3
 fi
 
 EXECUTION_DIR=exec
@@ -37,13 +39,17 @@ checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER}  > ${BEFORE_FILE}               
 monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER}/monitor.txt                             		  || die ${INITDIR} "Monitoring script failed."
 cd ${EXECUTION_DIR}                                                                      		  || die ${INITDIR} "Cannot cd to ${EXECUTION_DIR}."
 
-#Source the Freesurfer
-source ${FREESURFER_HOME}/SetUpFreeSurfers.sh
+#Move the license file to the freesurfer directory
+if [ [ ! -z "${LICENSE}" ] ];then
+  mv ${LICENSE} ${FREESURFER_HOME}/
+fi
 
 #Adding the reprozip command to trace the processing of subjects
 if [ ${REPROZIP_FLAG} = true ]; then
+  source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
   reprozip trace FreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal || die ${INITDIR} "Pipeline failed."
 else
+  source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
   FreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal                || die ${INITDIR} "Pipeline failed."
 fi
 

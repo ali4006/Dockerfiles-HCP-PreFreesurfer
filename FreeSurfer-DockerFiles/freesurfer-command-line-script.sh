@@ -17,7 +17,7 @@ fi
 
 REPROZIP_FLAG=false
 #If reprozip flag is set
-if [ $# -eq 3 ]; then
+if [ $# -eq 4 ]; then
   if [ $1 = "-r" ]; then 
     REPROZIP_FLAG=true
     SUBJECT_FOLDER=$2

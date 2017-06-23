@@ -46,3 +46,5 @@ ENV FREESURFER_HOME=/usr/local/src/freesurfer
 #Add the freesurfer home env variable to path
 ENV PATH=${PATH}:${FREESURFER_HOME}/bin
 
+#Add the freesurfer command line script
+ADD ./freesurfer-command-line-script.sh /bin

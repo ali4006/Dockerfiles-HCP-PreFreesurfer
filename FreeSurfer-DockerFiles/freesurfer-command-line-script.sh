@@ -41,7 +41,7 @@ cd ${EXECUTION_DIR}                                                             
 
 #Move the license file to the freesurfer directory
 if [ [ ! -z "${LICENSE}" ] ];then
-  mv ${LICENSE} ${FREESURFER_HOME}/
+  \cp ${LICENSE} ${FREESURFER_HOME}/
 fi
 
 #Adding the reprozip command to trace the processing of subjects

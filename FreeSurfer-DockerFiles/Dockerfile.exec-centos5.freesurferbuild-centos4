@@ -26,7 +26,8 @@ RUN yum install -y \
     libXmu \
     perl \
     tcsh \
-    which
+    which; \
+    yum clean all
 
 #Install Freesurfer 5.3.0 HCP centos4 build
 RUN wget ftp://surfer.nmr.mgh.harvard.edu/pub/dist/freesurfer/5.3.0-HCP/freesurfer-Linux-centos4_x86_64-stable-pub-v5.3.0-HCP.tar.gz -O freesurfer-centos4-v5.3.0.tar.gz; \

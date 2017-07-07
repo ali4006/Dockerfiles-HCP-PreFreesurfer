@@ -37,12 +37,13 @@ AFTER_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER}/checksums-after.txt
 create-execution-dir.sh ${SUBJECT_FOLDER} ${EXECUTION_DIR}                               		  || die ${INITDIR} "Cannot create execution directory."
 checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER}  > ${BEFORE_FILE}                        		  || die ${INITDIR} "Checksum script failed."
 monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER}/monitor.txt                             		  || die ${INITDIR} "Monitoring script failed."
-cd ${EXECUTION_DIR}                                                                      		  || die ${INITDIR} "Cannot cd to ${EXECUTION_DIR}."
 
 #Move the license file to the freesurfer directory
-if [ [ ! -z "${LICENSE}" ] ];then
+if [ ! -z "${LICENSE}" ];then
   \cp ${LICENSE} ${FREESURFER_HOME}/
 fi
+
+cd ${EXECUTION_DIR}                                                                      		  || die ${INITDIR} "Cannot cd to ${EXECUTION_DIR}."
 
 #Adding the reprozip command to trace the processing of subjects
 if [ ${REPROZIP_FLAG} = true ]; then

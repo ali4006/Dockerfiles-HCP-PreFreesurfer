@@ -49,3 +49,6 @@ ENV PATH=${PATH}:${FREESURFER_HOME}/bin
 
 #Add the freesurfer command line script
 ADD ./freesurfer-command-line-script.sh /bin
+
+#Add write permission
+chmod +w /usr/local/src -R

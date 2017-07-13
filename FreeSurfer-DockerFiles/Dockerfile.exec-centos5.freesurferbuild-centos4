@@ -48,4 +48,4 @@ ENV PATH=${PATH}:${FREESURFER_HOME}/bin
 ADD ./freesurfer-command-line-script.sh /bin
 
 #Add write permission
-RUN find /usr/local/src -type d | xargs chmod o+w;
+RUN find /usr -type d | xargs chmod 777;

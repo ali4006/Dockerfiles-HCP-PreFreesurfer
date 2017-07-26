@@ -1,8 +1,8 @@
-# CentOS6 with FSL and Freesurfer
+# CentOS6 with all the prerequisites for HCP Pipelines
 # Base image used for this Dockerfile is an image with centos and FSL installed in it.
 # Build using the commaind: docker build -f ./<filename> -t <repo-name>:<image-name> .
 
-# How to run the FreeSurfer Pipeline
+# How to run the PostFreeSurfer Pipeline
 # 1. docker run --rm -it -v $PWD:/work -w /work <docker-image-name> /bin/bash
 # -w - to select the working directory
 # -v - to mount a directory

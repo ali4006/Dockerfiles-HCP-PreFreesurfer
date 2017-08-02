@@ -39,8 +39,10 @@ cd ${EXECUTION_DIR}                                                             
 
 #Adding the reprozip command to trace the processing of subjects
 if [ ${REPROZIP_FLAG} = true ]; then
+  source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
   reprozip trace PostFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal || die ${INITDIR} "Pipeline failed."
 else
+  source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
   PostFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal                || die ${INITDIR} "Pipeline failed."
 fi
 

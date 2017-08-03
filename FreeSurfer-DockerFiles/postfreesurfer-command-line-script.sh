@@ -57,3 +57,9 @@ fi
 cd ${INITDIR}                                                                                             || die ${INITDIR} "cd .. failed."
 checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER} > ${AFTER_FILE}                                           || die ${INITDIR} "Checksum script failed."
 
+#Copying the .reprozip-trace folder in execution directory to the subject folder.
+if [ ${REPROZIP_FLAG} = true ]; then
+  cp -r ${EXECUTION_DIR}/.reprozip-trace ${EXECUTION_DIR}/${SUBJECT_FOLDER}
+fi
+
+ln -s ${EXECUTION_DIR}/${SUBJECT_FOLDER} ${SUBJECT_FOLDER}-${NAME}                       		  || die ${INITDIR} "Cannot link results."

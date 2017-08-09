@@ -47,6 +47,7 @@ ENV PATH=${PATH}:${FREESURFER_HOME}/bin
 #Add the freesurfer command line script
 ADD ./freesurfer-command-line-script.sh /bin
 ADD ./postfreesurfer-command-line-script.sh /bin
+ADD ./fmrivolume-command-line-script.sh /bin
 
 #Add write permission
 RUN find /usr -type d | xargs chmod 777;

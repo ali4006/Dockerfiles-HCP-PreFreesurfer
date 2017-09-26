@@ -37,10 +37,9 @@ echo ${SUBJECT_FOLDER_ORIGINAL_NUMBER}
 BEFORE_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}/checksums-before.txt
 AFTER_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}/checksums-after.txt
 
-echo $"(create-execution-dir.sh ${SUBJECT_FOLDER} ${SUBJECT_FOLDER_ORIGINAL_NUMBER} ${EXECUTION_DIR})"
 create-execution-dir.sh ${SUBJECT_FOLDER} ${SUBJECT_FOLDER_ORIGINAL_NUMBER} ${EXECUTION_DIR}              || die ${INITDIR} "Cannot create execution directory."
-#checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}  > ${BEFORE_FILE}                         || die ${INITDIR} "Checksum script failed."
-#monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGNAL_NUMBER}/monitor.txt                               || die ${INITDIR} "Monitoring script failed."
+checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}  > ${BEFORE_FILE}                         || die ${INITDIR} "Checksum script failed."
+monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGNAL_NUMBER}/monitor.txt                               || die ${INITDIR} "Monitoring script failed."
 cd ${EXECUTION_DIR}                                                                      		  || die ${INITDIR} "Cannot cd to ${EXECUTION_DIR}."
 
 #Adding the reprozip command to trace the processing of subjects
@@ -51,7 +50,7 @@ else
 fi
 
 cd ${INITDIR}                                                                            		  || die ${INITDIR} "cd .. failed."
-#checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER} > ${AFTER_FILE}                          		  || die ${INITDIR} "Checksum script failed."
+checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER} > ${AFTER_FILE}                          		  || die ${INITDIR} "Checksum script failed."
 
 #Copying the .reprozip-trace folder in execution directory to the subject folder.
 if [ ${REPROZIP_FLAG} = true ]; then
@@ -59,4 +58,3 @@ if [ ${REPROZIP_FLAG} = true ]; then
 fi
 
 ln -s ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER} ${SUBJECT_FOLDER}-${NAME}                       		  || die ${INITDIR} "Cannot link results."
-

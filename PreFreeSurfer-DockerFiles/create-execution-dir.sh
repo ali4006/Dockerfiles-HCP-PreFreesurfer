@@ -26,9 +26,4 @@ execFolder=$3
 mkdir -p ${execFolder}
 
 # copy the subject directory
-cp -R ${subjectDir}/ ${execFolder} || die "Cannot cp ${subjectDir} to ${execFolder}"
-
-#Rename the subjectDir to subjectId
-mv ${execFolder}/${subjectDir} ${execFolder}/${subjectId} || die "Cannot mv ${subjectDir} to ${subjectId}"
-
-
+cp -R ${subjectDir}/ ${execFolder}/${subjectId} || die "Cannot cp ${subjectDir} to ${execFolder}"

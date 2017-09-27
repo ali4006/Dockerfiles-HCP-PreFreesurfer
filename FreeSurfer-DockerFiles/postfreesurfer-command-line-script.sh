@@ -32,14 +32,14 @@ fi
 
 EXECUTION_DIR=exec
 #To maintain the same subject folder name while processing we are taking only the subject folder name
-SUBJECT_FOLDER_ORIGINAL_NUMBER="$(echo "$1" | awk -F"-" '{print $1}')"
+SUBJECT_FOLDER_ID="$(echo "$1" | awk -F"-" '{print $1}')"
 
-BEFORE_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}/checksums-before.txt
-AFTER_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}/checksums-after.txt
+BEFORE_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}/checksums-before.txt
+AFTER_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}/checksums-after.txt
 
-create-execution-dir.sh ${SUBJECT_FOLDER} ${SUBJECT_FOLDER_ORIGINAL_NUMBER} ${EXECUTION_DIR}                              || die ${INITDIR} "Cannot create execution directory."
-checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}  > ${BEFORE_FILE}                        		  || die ${INITDIR} "Checksum script failed."
-monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}/monitor.txt                             		  || die ${INITDIR} "Monitoring script failed."
+create-execution-dir.sh ${SUBJECT_FOLDER} ${SUBJECT_FOLDER_ID} ${EXECUTION_DIR}                              || die ${INITDIR} "Cannot create execution directory."
+checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}  > ${BEFORE_FILE}                        		  || die ${INITDIR} "Checksum script failed."
+monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}/monitor.txt                             		  || die ${INITDIR} "Monitoring script failed."
 
 
 #Move the license file to the freesurfer directory
@@ -52,18 +52,18 @@ cd ${EXECUTION_DIR}                                                             
 #Adding the reprozip command to trace the processing of subjects
 if [ ${REPROZIP_FLAG} = true ]; then
   source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
-  reprozip trace PostFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER_ORIGINAL_NUMBER} --runlocal || die ${INITDIR} "Pipeline failed."
+  reprozip trace PostFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER_ID} --runlocal || die ${INITDIR} "Pipeline failed."
 else
   source ${FREESURFER_HOME}/SetUpFreeSurfer.sh
-  PostFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER_ORIGINAL_NUMBER} --runlocal                || die ${INITDIR} "Pipeline failed."
+  PostFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER_ID} --runlocal                || die ${INITDIR} "Pipeline failed."
 fi
 
 cd ${INITDIR}                                                                                                              || die ${INITDIR} "cd .. failed."
-checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER} > ${AFTER_FILE}                                            || die ${INITDIR} "Checksum script failed."
+checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID} > ${AFTER_FILE}                                            || die ${INITDIR} "Checksum script failed."
 
 #Copying the .reprozip-trace folder in execution directory to the subject folder.
 if [ ${REPROZIP_FLAG} = true ]; then
-  cp -r ${EXECUTION_DIR}/.reprozip-trace ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER}
+  cp -r ${EXECUTION_DIR}/.reprozip-trace ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}
 fi
 
-ln -s ${EXECUTION_DIR}/${SUBJECT_FOLDER_ORIGINAL_NUMBER} ${SUBJECT_FOLDER}-${NAME}                       		  || die ${INITDIR} "Cannot link results."
+ln -s ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID} ${SUBJECT_FOLDER}-${NAME}                       		  || die ${INITDIR} "Cannot link results."

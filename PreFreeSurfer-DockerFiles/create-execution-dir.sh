@@ -9,18 +9,21 @@ function die {
     return 1
 }
 
-if [ $# != 2 ]
+if [ $# != 3 ]
 then
-    die "Usage: $0 <subject_folder> <execution_folder>\n Folders have to be in the current working folder."
+    die "Usage: $0 <subject_folder> <subject_folder_original_number> <execution_folder>\n Folders have to be in the current working folder."
 fi
 
 subjectDir=$1
 test -d ./${subjectDir} || die "${subjectDir} is not a directory or it is not in the current working folder."
 
-execFolder=$2
+#To get the original HCP subject name
+subjectId=$2
+
+execFolder=$3
+
 # create new directory
 mkdir -p ${execFolder}
 
 # copy the subject directory
-cp -R ${subjectDir}/ ${execFolder} || die "Cannot cp ${subjectDir} to ${execFolder}"
-
+cp -R ${subjectDir}/ ${execFolder}/${subjectId} || die "Cannot cp ${subjectDir} to ${execFolder}"

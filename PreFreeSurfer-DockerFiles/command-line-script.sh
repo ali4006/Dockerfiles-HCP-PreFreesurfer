@@ -29,28 +29,30 @@ else
 fi
 
 EXECUTION_DIR=exec
-BEFORE_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER}/checksums-before.txt
-AFTER_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER}/checksums-after.txt
+#To maintain the same subject folder name while processing we are taking only the subject folder name
+SUBJECT_FOLDER_ID="$(echo "$1" | awk -F"-" '{print $1}')"
 
-create-execution-dir.sh ${SUBJECT_FOLDER} ${EXECUTION_DIR}                               		  || die ${INITDIR} "Cannot create execution directory."
-checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER}  > ${BEFORE_FILE}                        		  || die ${INITDIR} "Checksum script failed."
-monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER}/monitor.txt                             		  || die ${INITDIR} "Monitoring script failed."
+BEFORE_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}/checksums-before.txt
+AFTER_FILE=${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}/checksums-after.txt
+
+create-execution-dir.sh ${SUBJECT_FOLDER} ${SUBJECT_FOLDER_ID} ${EXECUTION_DIR}              || die ${INITDIR} "Cannot create execution directory."
+checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}  > ${BEFORE_FILE}                         || die ${INITDIR} "Checksum script failed."
+monitor.sh &> ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}/monitor.txt                               || die ${INITDIR} "Monitoring script failed."
 cd ${EXECUTION_DIR}                                                                      		  || die ${INITDIR} "Cannot cd to ${EXECUTION_DIR}."
 
 #Adding the reprozip command to trace the processing of subjects
 if [ ${REPROZIP_FLAG} = true ]; then
-  reprozip trace PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal || die ${INITDIR} "Pipeline failed."
+  reprozip trace PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER_ID} --runlocal || die ${INITDIR} "Pipeline failed."
 else
-  PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER} --runlocal                || die ${INITDIR} "Pipeline failed."
+  PreFreeSurferPipelineBatch.sh --StudyFolder=$PWD --Subjlist=${SUBJECT_FOLDER_ID} --runlocal                || die ${INITDIR} "Pipeline failed."
 fi
 
 cd ${INITDIR}                                                                            		  || die ${INITDIR} "cd .. failed."
-checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER} > ${AFTER_FILE}                          		  || die ${INITDIR} "Checksum script failed."
+checksums.sh ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID} > ${AFTER_FILE}                          		  || die ${INITDIR} "Checksum script failed."
 
 #Copying the .reprozip-trace folder in execution directory to the subject folder.
 if [ ${REPROZIP_FLAG} = true ]; then
-  cp -r ${EXECUTION_DIR}/.reprozip-trace ${EXECUTION_DIR}/${SUBJECT_FOLDER}
+  cp -r ${EXECUTION_DIR}/.reprozip-trace ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID}
 fi
 
-ln -s ${EXECUTION_DIR}/${SUBJECT_FOLDER} ${SUBJECT_FOLDER}-${NAME}                       		  || die ${INITDIR} "Cannot link results."
-
+ln -s ${EXECUTION_DIR}/${SUBJECT_FOLDER_ID} ${SUBJECT_FOLDER}-${NAME}                       		  || die ${INITDIR} "Cannot link results."

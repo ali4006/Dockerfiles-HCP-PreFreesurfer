@@ -21,7 +21,7 @@ echo "###########################################"
 echo "############ Checksum of docker image #####"
 echo "###########################################"
 
-(ls ${QSUB_FILE} && grep "Digest: sha256:" ${QSUB_FILE}) || die "Cannot find sha256 digest of docker image"
+(ls ${QSUB_FILE} && grep "Digest: sha256:" ${QSUB_FILE}) || echo "Cannot find sha256 digest of docker image"
 
 echo "*******************************************"
 echo "************ Checksum of files ************"
